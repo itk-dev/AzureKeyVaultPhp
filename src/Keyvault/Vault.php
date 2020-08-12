@@ -1,7 +1,7 @@
 
 <?php
 
-namespace itkdev\azurekeyvault\keyvault;
+namespace Itkdev\Azurekeyvault\Keyvault;
 
 use GuzzleHttp\Client;
 

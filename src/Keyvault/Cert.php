@@ -1,6 +1,6 @@
 <?php
 
-namespace itkdev\azurekeyvault\keyvault;
+namespace Itkdev\Azurekeyvault\Keyvault;
 
 class Certificate extends Vault {
 

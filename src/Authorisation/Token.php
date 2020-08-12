@@ -1,6 +1,6 @@
 <?php
 
-namespace itkdev\azurekeyvault\authorisation;
+namespace Itkdev\Azurekeyvault\Authorisation;
 
 class Token
 {
