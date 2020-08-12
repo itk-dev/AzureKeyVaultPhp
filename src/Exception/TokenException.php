@@ -1,16 +1,27 @@
 <?php
 
+/**
+ * @file
+ * Access token exception from Azure login.
+ */
+
 namespace Itkdev\Azurekeyvault\Exception;
 
 use Throwable;
 
-class TokenException extends \Exception {
+/**
+ * Class TokenException.
+ *
+ * Add URI field to the exception with link to more information at Azure documentation.
+ */
+class TokenException extends \Exception
+{
     public $uri;
 
     public function __construct($message = '', $code = 0, Throwable $previous = null, $uri = '')
     {
         parent::__construct($message, $code, $previous);
-        $this->uri;
+        $this->uri = $uri;
     }
 
     /**

@@ -12,7 +12,7 @@ use Itkdev\Azurekeyvault\Exception\TokenException;
 use Itkdev\Azurekeyvault\Token;
 
 /**
- * Class Token
+ * Class Token.
  */
 class VaultToken
 {
@@ -20,17 +20,17 @@ class VaultToken
      * Get oAuth token.
      *
      * @param $tenantId
-     *   Azure tenant id.
+     *   Azure tenant id
      * @param $clientId
-     *   Client id (Azure application id).
+     *   Client id (Azure application id)
      * @param $clientSecret
-     *   Client secret.
+     *   Client secret
      *
-     * @return Token
-     *   Token object with the access token and expire information.
+     * @return token
+     *   Token object with the access token and expire information
      *
-     * @throws TokenException
-     *   Throw exception if error is returned.
+     * @throws tokenException
+     *   Throw exception if error is returned
      */
     public static function getToken($tenantId, $clientId, $clientSecret): Token
     {
@@ -41,11 +41,11 @@ class VaultToken
                 'https://login.microsoftonline.com/'.$tenantId.'/oauth2/token',
                 [
                     'form_params' => [
-                        'client_id'     => $clientId,
+                        'client_id' => $clientId,
                         'client_secret' => $clientSecret,
-                        'resource'      => 'https://vault.azure.net',
-                        'grant_type'    => 'client_credentials',
-                    ]
+                        'resource' => 'https://vault.azure.net',
+                        'grant_type' => 'client_credentials',
+                    ],
                 ]
             )->getBody()->getContents();
         } catch (\GuzzleHttp\Exception\ClientException $e) {

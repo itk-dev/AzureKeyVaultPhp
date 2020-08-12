@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @file
+ * Certificate Exception form the vault.
+ */
+
 namespace Itkdev\Azurekeyvault\Exception;
 
-class CertificateException extends \Exception {
-
+/**
+ * Class CertificateException.
+ */
+class CertificateException extends \Exception
+{
 }

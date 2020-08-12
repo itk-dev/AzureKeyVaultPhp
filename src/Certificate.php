@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Certificate object representation of vault certificate.
+ */
+
 namespace Itkdev\Azurekeyvault;
 
-class Certificate {
-
+/**
+ * Class Certificate.
+ */
+class Certificate
+{
     private $id;
     private $cert;
     private $enabled;
@@ -11,6 +19,22 @@ class Certificate {
     private $update;
     private $expired;
 
+    /**
+     * Certificate constructor.
+     *
+     * @param $id
+     *   Certificate ID
+     * @param $cert
+     *   The certificate data
+     * @param $enabled
+     *   True if the certificate is enabled at Azure
+     * @param $created
+     *   When the certificate was created
+     * @param $update
+     *   When the certificate was last updated
+     * @param $expired
+     *   When the certificate expires
+     */
     public function __construct($id, $cert, $enabled, $created, $update, $expired)
     {
         $this->id = $id;
@@ -21,15 +45,29 @@ class Certificate {
         $this->expired = $expired;
     }
 
+    /**
+     * Returns the certificate.
+     */
     public function __toString()
     {
         return $this->getCert();
     }
 
-    public function isValid() {
+    /**
+     * Check if the certificate is vaild.
+     *
+     * @return bool
+     *   If valid true else false
+     */
+    public function isValid(): bool
+    {
         $valid = true;
 
         if (is_null($this->id)) {
+            $valid = false;
+        }
+
+        if ($this->expired <= time()) {
             $valid = false;
         }
 
