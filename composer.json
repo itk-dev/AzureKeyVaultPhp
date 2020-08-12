@@ -1,0 +1,23 @@
+{
+  "name": "itkdev/azure-key-vault-php",
+  "description": "Azure key vault php library",
+  "license": "MIT",
+  "keywords": ["azure", "key vault"],
+  "authors": [
+    {
+      "name": "Jesper Kristensen",
+      "email": "itkdev@mkb.aarhus.dk"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "itkdev\\azurekeyvault\\": "src/"
+    }
+  }
+}
