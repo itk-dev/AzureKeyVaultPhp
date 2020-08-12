@@ -3,6 +3,7 @@
 namespace Itkdev\Azurekeyvault\Keyvault;
 
 use GuzzleHttp\Client;
+use Itkdev\Azurekeyvault\Exception\CertificateException;
 
 abstract class Vault
 {
@@ -39,29 +40,24 @@ abstract class Vault
                 ]
             );
 
-            return $this->setOutput(
+            return $this->output(
                 $result->getStatusCode(),
                 $result->getReasonPhrase(),
                 json_decode($result->getBody()->getContents(), true)
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            return $this->setOutput(
-                $e->getResponse()->getStatusCode(),
-                array_shift(json_decode($e->getResponse()->getBody()->getContents(), true))
-            );
+            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+            throw new CertificateException($error['message'], $e->getResponse()->getStatusCode());
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return $this->setOutput(
-                500,
-                $e->getHandlerContext()['error']
-            );
+            throw new CertificateException($e->getMessage(), 500);
         }
     }
 
-    private function setOutput($code, $message, $data = null)
+    private function output($code, $message, $data = null)
     {
         return [
             'code' => $code,
-            'responseMessage' => $message,
+            'message' => $message,
             'data' => $data
         ];
     }
