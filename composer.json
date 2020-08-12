@@ -3,6 +3,7 @@
   "description": "Azure key vault php library",
   "license": "MIT",
   "keywords": ["azure", "key vault"],
+  "type": "library",
   "authors": [
     {
       "name": "Jesper Kristensen",
