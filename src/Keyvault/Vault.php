@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Itkdev\Azurekeyvault\Keyvault;
