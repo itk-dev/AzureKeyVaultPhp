@@ -5,7 +5,7 @@
  * Token object representation of Azure access token.
  */
 
-namespace Itkdev\Azurekeyvault;
+namespace ItkDev\AzureKeyVault;
 
 class Token
 {

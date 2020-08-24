@@ -5,7 +5,7 @@
  * Abstract class to handle request to Azure key vault.
  */
 
-namespace Itkdev\Azurekeyvault\Keyvault;
+namespace Itkdev\AzureKeyVault\KeyVault;
 
 use GuzzleHttp\Client;
 use Itkdev\Azurekeyvault\Exception\CertificateException;

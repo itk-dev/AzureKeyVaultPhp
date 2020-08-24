@@ -5,7 +5,7 @@
  * Handle certificates from the vault.
  */
 
-namespace Itkdev\Azurekeyvault\Keyvault;
+namespace Itkdev\AzureKeyVault\KeyVault;
 
 use Itkdev\Azurekeyvault\Certificate;
 
