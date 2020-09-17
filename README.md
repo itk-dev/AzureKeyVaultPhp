@@ -29,8 +29,8 @@ composer require itkdev/azure-key-vault-php": "dev-master"
 
 $autoloader = require_once 'vendor/autoload.php';
 
-use Itkdev\Azurekeyvault\Authorisation\VaultToken;
-use Itkdev\Azurekeyvault\Keyvault\VaultCertificate;
+use Itkdev\AzureKeyVault\Authorisation\VaultToken;
+use Itkdev\AzureKeyVault\KeyVault\VaultCertificate;
 
 // Requires that you have an tenant if, client id and client secret.
 $token = VaultToken::getToken(

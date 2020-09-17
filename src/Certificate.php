@@ -5,7 +5,7 @@
  * Certificate object representation of vault certificate.
  */
 
-namespace Itkdev\Azurekeyvault;
+namespace ItkDev\AzureKeyVault;
 
 /**
  * Class Certificate.

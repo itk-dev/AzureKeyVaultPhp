@@ -1,5 +1,5 @@
 {
-  "name": "itkdev/azure-key-vault-php",
+  "name": "itk-dev/azure-key-vault-php",
   "description": "Azure key vault php library",
   "license": "MIT",
   "keywords": ["azure", "key vault"],
@@ -12,6 +12,7 @@
   ],
   "require": {
     "php": ">=7.3",
+    "ext-json": "*",
     "guzzlehttp/guzzle": "^7.0"
   },
   "require-dev": {
@@ -20,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Itkdev\\Azurekeyvault\\": "src/"
+      "ItkDev\\AzureKeyVault\\": "src/"
     }
   },
   "scripts": {

@@ -5,7 +5,7 @@
  * Certificate Exception form the vault.
  */
 
-namespace Itkdev\Azurekeyvault\Exception;
+namespace ItkDev\AzureKeyVault\Exception;
 
 /**
  * Class CertificateException.
