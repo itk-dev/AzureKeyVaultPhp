@@ -44,14 +44,7 @@ class VaultCertificate extends Vault
                 $data['attributes']['exp']
             );
         } else {
-            $cert = new Certificate(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            );
+            $cert = new Certificate(null, null, null, null, null, null);
         }
 
         return $cert;
