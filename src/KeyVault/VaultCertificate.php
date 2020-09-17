@@ -8,7 +8,7 @@
 namespace ItkDev\AzureKeyVault\KeyVault;
 
 use ItkDev\AzureKeyVault\Certificate;
-use ItkDev\AzureKeyVault\Exception\CertificateException;
+use ItkDev\AzureKeyVault\Exception\VaultException;
 
 /**
  * Class VaultCertificate.
@@ -26,7 +26,7 @@ class VaultCertificate extends Vault
      * @return certificate
      *   The fetched certificate
      *
-     * @throws CertificateException
+     * @throws VaultException
      */
     public function getCertificate($name, $version): Certificate
     {

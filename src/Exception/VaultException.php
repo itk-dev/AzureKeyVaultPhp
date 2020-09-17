@@ -10,6 +10,6 @@ namespace ItkDev\AzureKeyVault\Exception;
 /**
  * Class CertificateException.
  */
-class CertificateException extends \Exception
+class VaultException extends \Exception
 {
 }
