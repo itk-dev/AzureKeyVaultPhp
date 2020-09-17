@@ -7,6 +7,7 @@
 
 namespace ItkDev\AzureKeyVault\KeyVault;
 
+use ItkDev\AzureKeyVault\Exception\SecretException;
 use ItkDev\AzureKeyVault\Exception\VaultException;
 use ItkDev\AzureKeyVault\Secret;
 
@@ -23,12 +24,17 @@ class VaultSecret extends Vault
      *
      * @return Secret
      *
-     * @throws VaultException
+     * @throws SecretException
      */
     public function getSecret(string $name, string $secretId): Secret
     {
         $apiCall = 'secrets/'.$name.'/'.$secretId.'?api-version=7.0';
-        $response = $this->requestApi('GET', $apiCall, []);
+
+        try {
+            $response = $this->requestApi('GET', $apiCall, []);
+        } catch (VaultException $e) {
+            throw new SecretException($e->getMessage(), $e->getCode());
+        }
 
         if (200 == $response['code']) {
             $data = $response['data'];
