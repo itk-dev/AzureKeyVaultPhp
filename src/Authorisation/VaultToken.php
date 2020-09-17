@@ -8,8 +8,8 @@
 namespace ItkDev\AzureKeyVault\Authorisation;
 
 use GuzzleHttp\Client;
-use Itkdev\Azurekeyvault\Exception\TokenException;
-use Itkdev\Azurekeyvault\Token;
+use ItkDev\AzureKeyVault\Exception\TokenException;
+use ItkDev\AzureKeyVault\Token;
 
 /**
  * Class Token.
