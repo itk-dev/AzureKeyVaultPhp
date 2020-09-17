@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Secret object representation of vault secret.
+ */
+
 namespace ItkDev\AzureKeyVault;
 
 /**
@@ -15,7 +20,18 @@ class Secret
     private $updated;
     private $recoveryLevel;
 
-    public function __construct($id, $value, $managed, $enabled, $created, $updated, $recoveryLevel)
+    /**
+     * Secret constructor.
+     *
+     * @param string $id            the secret id
+     * @param string $value         the secret value
+     * @param bool $managed       whether the secrets lifetime is managed by key vault
+     * @param bool $enabled       whether the secret is enabled
+     * @param int $created       the creation time in UTC
+     * @param int $updated       last updated time in UTC
+     * @param string $recoveryLevel deletion recovery level
+     */
+    public function __construct(string $id, string $value, bool $managed, bool $enabled, int $created, int $updated, string $recoveryLevel)
     {
         $this->id = $id;
         $this->value = $value;
@@ -27,57 +43,71 @@ class Secret
     }
 
     /**
-     * @return mixed
+     * Returns the secret id.
+     *
+     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * Returns whether the secrets lifetime is managed by the key vault.
+     *
+     * @return bool
      */
-    public function getManaged()
+    public function isManaged(): bool
     {
         return $this->managed;
     }
 
     /**
-     * @return mixed
+     * Returns the secret value.
+     *
+     * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @return mixed
+     * Returns whether the secret is enabled.
+     *
+     * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
     /**
-     * @return mixed
+     * Returns the creation time in UTC.
+     *
+     * @return int
      */
-    public function getCreated()
+    public function getCreated(): int
     {
         return $this->created;
     }
 
     /**
-     * @return mixed
+     * Returns the secrets last updated time in UTC.
+     *
+     * @return int
      */
-    public function getUpdated()
+    public function getUpdated(): int
     {
         return $this->updated;
     }
 
     /**
-     * @return mixed
+     * Returns the deletion recovery level.
+     *
+     * @return string
      */
-    public function getRecoveryLevel()
+    public function getRecoveryLevel(): string
     {
         return $this->recoveryLevel;
     }
@@ -85,9 +115,9 @@ class Secret
     /**
      * Returns the secret value.
      *
-     * @return mixed
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value;
     }
