@@ -5,11 +5,11 @@
  * Authentication with Azure reset API to obtain oAuth2 token.
  */
 
-namespace Itkdev\Azurekeyvault\Authorisation;
+namespace ItkDev\AzureKeyVault\Authorisation;
 
 use GuzzleHttp\Client;
-use Itkdev\Azurekeyvault\Exception\TokenException;
-use Itkdev\Azurekeyvault\Token;
+use ItkDev\AzureKeyVault\Exception\TokenException;
+use ItkDev\AzureKeyVault\Token;
 
 /**
  * Class Token.
