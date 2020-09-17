@@ -75,7 +75,7 @@ class Secret
     /**
      * Returns whether the secret is enabled.
      *
-     * @return bool
+     * @return bool true if managed else false
      */
     public function isEnabled(): bool
     {

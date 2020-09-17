@@ -19,16 +19,16 @@ class VaultSecret extends Vault
     /**
      * Get secret from the vault.
      *
-     * @param string $name
-     * @param string $secretId
+     * @param string $name the name of the secret in the vault
+     * @param string $version the version of the secret to get from the vault
      *
      * @return Secret
      *
      * @throws SecretException
      */
-    public function getSecret(string $name, string $secretId): Secret
+    public function getSecret(string $name, string $version): Secret
     {
-        $apiCall = 'secrets/'.$name.'/'.$secretId.'?api-version=7.0';
+        $apiCall = 'secrets/'.$name.'/'.$version.'?api-version=7.0';
 
         try {
             $response = $this->requestApi('GET', $apiCall, []);
