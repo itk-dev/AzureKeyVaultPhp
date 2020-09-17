@@ -9,6 +9,7 @@ namespace ItkDev\AzureKeyVault\KeyVault;
 
 use ItkDev\AzureKeyVault\Certificate;
 use ItkDev\AzureKeyVault\Exception\CertificateException;
+use ItkDev\AzureKeyVault\Exception\VaultException;
 
 /**
  * Class VaultCertificate.
@@ -31,7 +32,12 @@ class VaultCertificate extends Vault
     public function getCertificate($name, $version): Certificate
     {
         $apiCall = 'certificates/'.$name.'/'.$version.'?api-version=7.0';
-        $response = $this->requestApi('GET', $apiCall, []);
+
+        try {
+            $response = $this->requestApi('GET', $apiCall, []);
+        } catch (VaultException $e) {
+            throw new CertificateException($e->getMessage(), $e->getCode());
+        }
 
         if (200 === $response['code']) {
             $data = $response['data'];
