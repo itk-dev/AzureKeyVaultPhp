@@ -5,7 +5,7 @@
  * Access token exception from Azure login.
  */
 
-namespace Itkdev\Azurekeyvault\Exception;
+namespace ItkDev\AzureKeyVault\Exception;
 
 use Throwable;
 

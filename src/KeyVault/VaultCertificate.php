@@ -5,9 +5,11 @@
  * Handle certificates from the vault.
  */
 
-namespace Itkdev\Azurekeyvault\Keyvault;
+namespace ItkDev\AzureKeyVault\KeyVault;
 
-use Itkdev\Azurekeyvault\Certificate;
+use ItkDev\AzureKeyVault\Certificate;
+use ItkDev\AzureKeyVault\Exception\CertificateException;
+use ItkDev\AzureKeyVault\Exception\VaultException;
 
 /**
  * Class VaultCertificate.
@@ -25,16 +27,28 @@ class VaultCertificate extends Vault
      * @return certificate
      *   The fetched certificate
      *
-     * @throws \Itkdev\Azurekeyvault\Exception\CertificateException
+     * @throws CertificateException
      */
     public function getCertificate($name, $version): Certificate
     {
         $apiCall = 'certificates/'.$name.'/'.$version.'?api-version=7.0';
-        $response = $this->requestApi('GET', $apiCall, []);
+
+        try {
+            $response = $this->requestApi('GET', $apiCall, []);
+        } catch (VaultException $e) {
+            throw new CertificateException($e->getMessage(), $e->getCode());
+        }
 
         if (200 === $response['code']) {
             $data = $response['data'];
-            $cert = new Certificate($data['id'], $data['cer'], $data['attributes']['enabled'], $data['attributes']['created'], $data['attributes']['updated'], $data['attributes']['exp']);
+            $cert = new Certificate(
+                $data['id'],
+                $data['cer'],
+                $data['attributes']['enabled'],
+                $data['attributes']['created'],
+                $data['attributes']['updated'],
+                $data['attributes']['exp']
+            );
         } else {
             $cert = new Certificate(null, null, null, null, null, null);
         }

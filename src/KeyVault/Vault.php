@@ -5,10 +5,10 @@
  * Abstract class to handle request to Azure key vault.
  */
 
-namespace Itkdev\Azurekeyvault\Keyvault;
+namespace ItkDev\AzureKeyVault\KeyVault;
 
 use GuzzleHttp\Client;
-use Itkdev\Azurekeyvault\Exception\CertificateException;
+use ItkDev\AzureKeyVault\Exception\VaultException;
 
 /**
  * Class Vault.
@@ -45,7 +45,7 @@ abstract class Vault
      * @return array
      *   Data from the rest API. Indexed by 'code', 'message' and 'data'.
      *
-     * @throws CertificateException
+     * @throws VaultException
      */
     protected function requestApi($method, $apiCall, array $json)
     {
@@ -78,9 +78,9 @@ abstract class Vault
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-            throw new CertificateException($error['error']['message'], $e->getResponse()->getStatusCode());
+            throw new VaultException($error['error']['message'], $e->getResponse()->getStatusCode());
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-            throw new CertificateException($e->getMessage(), 500);
+            throw new VaultException($e->getMessage(), 500);
         }
     }
 

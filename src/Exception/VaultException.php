@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Certificate exception form the vault.
+ * Exception form the vault.
  */
 
 namespace ItkDev\AzureKeyVault\Exception;
@@ -10,6 +10,6 @@ namespace ItkDev\AzureKeyVault\Exception;
 /**
  * Class CertificateException.
  */
-class CertificateException extends VaultException
+class VaultException extends \Exception
 {
 }
