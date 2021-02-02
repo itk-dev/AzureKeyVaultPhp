@@ -24,8 +24,8 @@ class VaultToken
     /**
      * VaultToken constructor.
      *
-     * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $requestFactory
+     * @param ClientInterface $httpClient     PSR-18 compatible client for making http requests
+     * @param RequestFactoryInterface $requestFactory PSR-17 compatible request factory for making PSR-7 compatible requests
      */
     public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory)
     {
