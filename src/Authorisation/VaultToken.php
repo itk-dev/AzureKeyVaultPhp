@@ -73,6 +73,10 @@ class VaultToken
 
         $data = json_decode($response->getBody()->getContents(), true);
 
+        if (null === $data || false === $data) {
+            throw new TokenException('Could not decode json from response.');
+        }
+
         return new Token(
             $data['access_token'],
             $data['expires_in'],
