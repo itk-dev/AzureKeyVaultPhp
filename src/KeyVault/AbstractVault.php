@@ -25,14 +25,12 @@ abstract class AbstractVault
     /**
      * Vault constructor.
      *
-     * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $requestFactory
-     * @param $vaultName
-     *  Name of the vault
-     * @param $accessToken
-     *  oAuth2 access token for the vault
+     * @param ClientInterface $httpClient     PSR-18 compatible client for making http requests
+     * @param RequestFactoryInterface $requestFactory PSR-17 compatible request factory for making PSR-7 requests
+     * @param string $vaultName      Name of the vault
+     * @param string $accessToken    oAuth2 access token for the vault
      */
-    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, $vaultName, $accessToken)
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, string $vaultName, string $accessToken)
     {
         $this->keyVault = 'https://'.$vaultName.'.vault.azure.net/';
         $this->accessToken = $accessToken;
