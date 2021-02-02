@@ -18,6 +18,14 @@ class TokenException extends \Exception
 {
     public $uri;
 
+    /**
+     * TokenException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     * @param string $uri
+     */
     public function __construct($message = '', $code = 0, Throwable $previous = null, $uri = '')
     {
         parent::__construct($message, $code, $previous);

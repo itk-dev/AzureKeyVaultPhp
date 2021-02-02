@@ -14,12 +14,12 @@ use ItkDev\AzureKeyVault\Secret;
 /**
  * Class VaultSecret.
  */
-class VaultSecret extends Vault
+class VaultSecret extends AbstractVault
 {
     /**
      * Get secret from the vault.
      *
-     * @param string $name the name of the secret in the vault
+     * @param string $name    the name of the secret in the vault
      * @param string $version the version of the secret to get from the vault
      *
      * @return Secret

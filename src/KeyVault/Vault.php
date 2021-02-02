@@ -7,29 +7,37 @@
 
 namespace ItkDev\AzureKeyVault\KeyVault;
 
-use GuzzleHttp\Client;
 use ItkDev\AzureKeyVault\Exception\VaultException;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class Vault.
  */
-abstract class Vault
+abstract class AbstractVault
 {
     private $accessToken;
     private $keyVault;
+    private $httpClient;
+    private $requestFactory;
 
     /**
      * Vault constructor.
      *
-     * @param string $vaultName
-     *   Name of the vault
-     * @param string $accessToken
-     *   oAuth2 access token for the vault
+     * @param ClientInterface $httpClient
+     * @param RequestFactoryInterface $requestFactory
+     * @param $vaultName
+     *  Name of the vault
+     * @param $accessToken
+     *  oAuth2 access token for the vault
      */
-    public function __construct($vaultName, $accessToken)
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, $vaultName, $accessToken)
     {
         $this->keyVault = 'https://'.$vaultName.'.vault.azure.net/';
         $this->accessToken = $accessToken;
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -49,39 +57,27 @@ abstract class Vault
      */
     protected function requestApi($method, $apiCall, array $json)
     {
-        $client = new Client(
-            [
-                'base_uri' => $this->keyVault,
-                'timeout' => 2.0,
-            ]
-        );
+        $uri = $this->keyVault.$apiCall;
+
+        $request = $this->requestFactory->createRequest($method, $uri)
+            ->withHeader('User-Agent', 'browser/1.0')
+            ->withHeader('Accept', 'application/json')
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Authorization', 'Bearer '.$this->accessToken);
+
+        $request->getBody()->write(json_encode($json));
 
         try {
-            $result = $client->request(
-                $method,
-                $apiCall,
-                [
-                    'headers' => [
-                        'User-Agent' => 'browser/1.0',
-                        'Accept' => 'application/json',
-                        'Content-Type' => 'application/json',
-                        'Authorization' => 'Bearer '.$this->accessToken,
-                    ],
-                    'json' => $json,
-                ]
-            );
-
-            return $this->output(
-                $result->getStatusCode(),
-                $result->getReasonPhrase(),
-                json_decode($result->getBody()->getContents(), true)
-            );
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-            throw new VaultException($error['error']['message'], $e->getResponse()->getStatusCode());
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-            throw new VaultException($e->getMessage(), 500);
+            $response = $this->httpClient->sendRequest($request);
+        } catch (ClientExceptionInterface $e) {
+            throw new VaultException($e->getMessage(), $e->getCode());
         }
+
+        return $this->output(
+            $response->getStatusCode(),
+            $response->getReasonPhrase(),
+            json_decode($response->getBody()->getContents(), true)
+        );
     }
 
     /**

@@ -7,6 +7,9 @@
 
 namespace ItkDev\AzureKeyVault;
 
+/**
+ * Class Token.
+ */
 class Token
 {
     private $accessToken;
@@ -40,6 +43,8 @@ class Token
 
     /**
      * Outputs the access token.
+     *
+     * @return string
      */
     public function __toString()
     {
