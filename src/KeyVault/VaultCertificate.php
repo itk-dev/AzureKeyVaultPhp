@@ -14,7 +14,7 @@ use ItkDev\AzureKeyVault\Exception\VaultException;
 /**
  * Class VaultCertificate.
  */
-class VaultCertificate extends Vault
+class VaultCertificate extends AbstractVault
 {
     /**
      * Get certificate from the vault.

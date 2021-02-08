@@ -18,6 +18,14 @@ class TokenException extends \Exception
 {
     public $uri;
 
+    /**
+     * TokenException constructor.
+     *
+     * @param string $message  The Exception message to throw
+     * @param int $code     The Exception code
+     * @param Throwable|null $previous The previous throwable used for the exception chaining
+     * @param string $uri      Link to more information at Azure documentation
+     */
     public function __construct($message = '', $code = 0, Throwable $previous = null, $uri = '')
     {
         parent::__construct($message, $code, $previous);

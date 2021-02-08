@@ -7,15 +7,32 @@
 
 namespace ItkDev\AzureKeyVault\Authorisation;
 
-use GuzzleHttp\Client;
 use ItkDev\AzureKeyVault\Exception\TokenException;
 use ItkDev\AzureKeyVault\Token;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class Token.
  */
 class VaultToken
 {
+    private $httpClient;
+    private $requestFactory;
+
+    /**
+     * VaultToken constructor.
+     *
+     * @param ClientInterface $httpClient     PSR-18 compatible client for making http requests
+     * @param RequestFactoryInterface $requestFactory PSR-17 compatible request factory for making PSR-7 compatible requests
+     */
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory)
+    {
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+    }
+
     /**
      * Get oAuth token.
      *
@@ -32,31 +49,40 @@ class VaultToken
      * @throws tokenException
      *   Throw exception if error is returned
      */
-    public static function getToken($tenantId, $clientId, $clientSecret): Token
+    public function getToken($tenantId, $clientId, $clientSecret): Token
     {
-        $guzzle = new Client();
+        $request = $this->requestFactory->createRequest(
+            'POST',
+            'https://login.microsoftonline.com/'.$tenantId.'/oauth2/token'
+        );
+
+        $params = [
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret,
+            'resource' => 'https://vault.azure.net',
+            'grant_type' => 'client_credentials',
+        ];
+
+        $request->getBody()->write(http_build_query($params, '', '&'));
 
         try {
-            $response = $guzzle->post(
-                'https://login.microsoftonline.com/'.$tenantId.'/oauth2/token',
-                [
-                    'form_params' => [
-                        'client_id' => $clientId,
-                        'client_secret' => $clientSecret,
-                        'resource' => 'https://vault.azure.net',
-                        'grant_type' => 'client_credentials',
-                    ],
-                ]
-            )->getBody()->getContents();
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-            throw new TokenException($error['error_description'], $e->getResponse()->getStatusCode(), null, $error['error_uri']);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            $response = $this->httpClient->sendRequest($request);
+        } catch (ClientExceptionInterface $e) {
             throw new TokenException($e->getMessage(), $e->getCode());
         }
 
-        $data = json_decode($response, true);
+        $data = json_decode($response->getBody()->getContents(), true);
 
-        return new Token($data['access_token'], $data['expires_in'], $data['expires_on'], $data['not_before'], $data['resource']);
+        if (null === $data || false === $data) {
+            throw new TokenException('Could not decode json from response.');
+        }
+
+        return new Token(
+            $data['access_token'],
+            $data['expires_in'],
+            $data['expires_on'],
+            $data['not_before'],
+            $data['resource']
+        );
     }
 }

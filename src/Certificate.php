@@ -47,6 +47,8 @@ class Certificate
 
     /**
      * Returns the certificate.
+     *
+     * @return string
      */
     public function __toString()
     {
