@@ -33,22 +33,28 @@ use Itkdev\AzureKeyVault\Authorisation\VaultToken;
 use Itkdev\AzureKeyVault\KeyVault\VaultCertificate;
 use Itkdev\AzureKeyVault\KeyVault\VaultSecret;
 
+// The VaultToken class requires a PSR-18 compatible http client and a PSR-17 compatible request factory.
+$vaultToken = new VaultToken($httpClient, $requestFactory);
+
 // Requires that you have an tenant if, client id and client secret.
-$token = VaultToken::getToken(
+$token = $vaultToken->getToken(
     'xxxx',
     'yyyy',
-    'zzzz');
+    'zzzz'
+);    
 
 // Certificates
+// This requires a PSR-18 compatible http client and a PSR-17 compatible request factory.
 // Get vault with the name 'testVault' using the access token.
-$vault = new VaultCertificate('testVault', $token->getAccessToken());
+$vault = new VaultCertificate($httpClient, $requestFactory, 'testVault', $token->getAccessToken());
 
 $cert = $vault->getCertificate('TestCert', '8cb726a7bd52460a96a5496672562df0');
 echo $cert->getCert();
 
 // Secrets
+// This requires a PSR-18 compatible http client and a PSR-17 compatible request factory.
 // Get vault with the name 'testVault' using the access token.
-$vault = new VaultSecret('testVault', $token->getAccessToken());
+$vault = new VaultSecret($httpClient, $requestFactory, 'testVault', $token->getAccessToken());
 
 $secret = $vault->getSecret('TestCert', '8cb726a7bd52460a96a5496672562df0');
 echo $secret->getValue();
