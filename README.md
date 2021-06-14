@@ -59,3 +59,14 @@ $vault = new VaultSecret($httpClient, $requestFactory, 'testVault', $token->getA
 $secret = $vault->getSecret('TestCert', '8cb726a7bd52460a96a5496672562df0');
 echo $secret->getValue();
 ```
+
+# Remove passphrase from PKCS12 certificates
+
+If you don't want to have a passphrase on the certificate stored in the Azure Key Vault,
+you can use the following command to remove the passphrase:
+
+```shell
+openssl pkcs12 -in "PKCSFile" -nodes | openssl pkcs12 -export -out "PKCSFile-Nopass"
+```
+
+
