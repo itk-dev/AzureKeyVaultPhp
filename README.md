@@ -69,4 +69,13 @@ you can use the following command to remove the passphrase:
 openssl pkcs12 -in "PKCSFile" -nodes | openssl pkcs12 -export -out "PKCSFile-Nopass"
 ```
 
+# Convert p12 file to pem
+
+<https://github.com/MicrosoftDocs/azure-docs/issues/23558#issuecomment-823693525>
+
+```sh
+openssl pkcs12 -in hatogbriller.p12 -out tmp.pem -nodes
+(openssl x509 -in tmp.pem; openssl pkcs8 -topk8 -nocrypt -in tmp.pem) >| hatogbriller.pem
+rm tmp.pem
+```
 
