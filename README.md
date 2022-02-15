@@ -60,15 +60,20 @@ $secret = $vault->getSecret('TestCert', '8cb726a7bd52460a96a5496672562df0');
 echo $secret->getValue();
 ```
 
-# Remove passphrase from PKCS12 certificates
+# Storing certificates in the vault
+
+You may have to rename your `.p12` file to `.pfx` before being able to upload to the Azure Key Vault.
+
+## Removing passphrase from PKCS12 certificates
 
 If you don't want to have a passphrase on the certificate stored in the Azure Key Vault,
 you can use the following command to remove the passphrase:
 
 ```shell
-openssl pkcs12 -in "PKCSFile" -nodes | openssl pkcs12 -export -out "PKCSFile-Nopass"
+openssl pkcs12 -in certificate.p12 -nodes | openssl pkcs12 -export -out certificate.passwordless.pfx
 ```
 
+<!--
 # Convert p12 file to pem
 
 <https://github.com/MicrosoftDocs/azure-docs/issues/23558#issuecomment-823693525>
@@ -78,4 +83,5 @@ openssl pkcs12 -in hatogbriller.p12 -out tmp.pem -nodes
 (openssl x509 -in tmp.pem; openssl pkcs8 -topk8 -nocrypt -in tmp.pem) >| hatogbriller.pem
 rm tmp.pem
 ```
+-->
 
