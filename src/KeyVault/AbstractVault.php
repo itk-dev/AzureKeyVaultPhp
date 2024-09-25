@@ -60,16 +60,18 @@ abstract class AbstractVault
         $request = $this->requestFactory->createRequest($method, $uri)
             ->withHeader('User-Agent', 'browser/1.0')
             ->withHeader('Accept', 'application/json')
-            ->withHeader('Content-Type', 'application/json')
             ->withHeader('Authorization', 'Bearer '.$this->accessToken);
 
-        $encodedJson = json_encode($json);
+        if ('GET' !== $method && !empty($json)) {
+            $request = $request->withHeader('Content-Type', 'application/json');
+            $encodedJson = json_encode($json);
 
-        if (false === $encodedJson) {
-            throw new VaultException('Could not encode json.');
+            if (false === $encodedJson) {
+                throw new VaultException('Could not encode json.');
+            }
+
+            $request->getBody()->write($encodedJson);
         }
-
-        $request->getBody()->write($encodedJson);
 
         try {
             $response = $this->httpClient->sendRequest($request);
