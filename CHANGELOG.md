@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-14
+
+- Drupal 11 compabitility, adding "psr/http-message:^2.0" supposed
+
 ## [1.0.1] - 2024-09-25
 
 ### Fixed
@@ -33,7 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Functionality for fetching certificates.
 - Functionality for fetching secrets.
 
-[1.0.1]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/1.0.1...1.1.0
+[1.0.1]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/0.0.2...1.0.0
 [0.0.2]: https://github.com/itk-dev/AzureKeyVaultPhp/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/itk-dev/AzureKeyVaultPhp/releases/tag/0.0.1
