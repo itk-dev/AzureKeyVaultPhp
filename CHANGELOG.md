@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Drupal 11 compabitility, adding "psr/http-message:^2.0" supposed
+
 ## [1.0.1] - 2024-09-25
 
 ### Fixed
