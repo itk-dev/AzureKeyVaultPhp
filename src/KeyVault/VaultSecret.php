@@ -36,28 +36,19 @@ class VaultSecret extends AbstractVault
             throw new SecretException($e->getMessage(), $e->getCode());
         }
 
-        if (200 == $response['code']) {
-            $data = $response['data'];
-
-            return new Secret(
-                $data['id'],
-                $data['value'],
-                $data['managed'],
-                $data['attributes']['enabled'],
-                $data['attributes']['created'],
-                $data['attributes']['updated'],
-                $data['attributes']['recoveryLevel']
-            );
+        if (200 !== $response['code']) {
+            throw new SecretException($response['message'], $response['code']);
         }
 
+        $data = $response['data'];
         return new Secret(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            $data['id'],
+            $data['value'],
+            $data['managed'] ?? false,
+            $data['attributes']['enabled'],
+            $data['attributes']['created'],
+            $data['attributes']['updated'],
+            $data['attributes']['recoveryLevel']
         );
     }
 }
